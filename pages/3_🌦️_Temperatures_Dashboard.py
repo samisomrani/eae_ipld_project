@@ -31,7 +31,7 @@ st.divider()
 def load_data():
     data_path = "data/cities_temperatures.csv"
 
-    temps_df = None  # TODO: Ex 3.1: Load the dataset using Pandas, use the data_path variable and set the index column to "show_id"
+    temps_df = pd.read_csv(data_path)  # TODO: Ex 3.1: Load the dataset using Pandas, use the data_path variable and set the index column to "show_id"
 
     if temps_df is not None:
         temps_df["Date"] = pd.to_datetime(temps_df["Date"]).dt.date
@@ -49,27 +49,27 @@ with st.expander("Check the complete dataset:"):
 # ----- Data transformation -----
 
 # TODO: Ex 3.2: Create a new column called `AvgTemperatureCelsius` that contains the temperature in Celsius degrees.
-# temps_df["AvgTemperatureCelsius"] = ...       # uncomment this line to complete it
+temps_df["AvgTemperatureCelsius"] = temps_df["AvgTemperatureFahrenheit"].apply(lambda x : ((x-32)*5)/9)
 
 
 # ----- Extracting some basic information from the dataset -----
 
 # TODO: Ex 3.3: How many different cities are there? Provide a list of them.
-unique_countries_list = None
+unique_countries_list = list(temps_df["City"].unique())
 
 # TODO: Ex 3.4: Which are the minimum and maximum dates?
-min_date = None
-max_date = None
+min_date = temps_df["Date"].min() 
+max_date = temps_df["Date"].max()
 
 # TODO:  Ex 3.5: What are the global minimum and maximum temperatures? Find the city and the date of each of them.
-min_temp = None
-max_temp = None
+min_temp = temps_df["AvgTemperatureFahrenheit"].min()
+max_temp = temps_df["AvgTemperatureFahrenheit"].max()
 
-min_temp_city = None
-min_temp_date = None
+min_temp_city = temps_df[temps_df["AvgTemperatureFahrenheit"] == min_temp]["City"].values[0]
+min_temp_date = temps_df[temps_df["AvgTemperatureFahrenheit"] == min_temp]["Date"].values[0]
 
-max_temp_city = None
-max_temp_date = None
+max_temp_city = temps_df[temps_df["AvgTemperatureFahrenheit"] == max_temp]["City"].values[0]
+max_temp_date = temps_df[temps_df["AvgTemperatureFahrenheit"] == max_temp]["Date"].values[0]
 
 
 # ----- Displaying the extracted information metrics -----
@@ -131,13 +131,17 @@ if unique_countries_list is not None and len(selected_cities) > 0:
 
     fig = plt.figure(figsize=(10, 5))
 
-    # for city in selected_cities:
-    #     city_df = None            # TODO
-    #     city_df_period = None     # TODO
-    #     plt.plot()                # TODO 
-    # plt.title()   # TODO
-    # plt.xlabel()  # TODO
-    # plt.ylabel()  # TODO
+    for city in selected_cities:
+        city_df = temps_df[temps_df["City"]==city]            # TODO: get a dataframe with the rows of the selected city
+        city_df_period = city_df[city_df["Date"] <= end_date][city_df["Date"] >= start_date]       # TODO: get a dataframe with the rows of the selected city and the selected period of time using the Date column and any of the <, >, <=, >= operators to compare with start_date and end_date
+    
+        plt.plot(city_df_period["Date"],city_df_period["AvgTemperatureCelsius"],label=city)                # TODO plot each city line and use the label parameter to set the legend name for each city
+
+    plt.title(f"Temparture in {selected_cities[:]}")   # TODO
+    plt.xlabel("Date")  # TODO
+    plt.ylabel("Temperature")  # TODO
+
+    
 
     plt.legend()
     
@@ -150,14 +154,14 @@ if unique_countries_list is not None and len(selected_cities) > 0:
 
     fig = plt.figure(figsize=(10, 5))
 
-    # for city in selected_cities:
-    #     city_df = None            # TODO
-    #     city_df_period = None     # TODO
-    #     plt.hist()                # TODO
+    for city in selected_cities:
+        city_df = temps_df[temps_df["City"]==city]            # TODO: get a dataframe with the rows of the selected city
+        city_df_period = city_df[city_df["Date"] <= end_date][city_df["Date"] >= start_date]     # TODO: get a dataframe with the rows of the selected city and the selected period of time using the Date column and any of the <, >, <=, >= operators to compare with start_date and end_date
+        plt.hist(city_df_period["AvgTemperatureCelsius"],bins=20,label=city,alpha=0.8)                    # TODO: plot each city histogram in the same plot and use the label parameter to set the legend name for each city 
 
-    # plt.title()   # TODO
-    # plt.xlabel()  # TODO
-    # plt.ylabel()  # TODO
+    plt.title(f"Temperature Frenquency in {selected_cities}")   # TODO
+    plt.xlabel("Temperature")  # TODO
+    plt.ylabel("Frequency")
 
     plt.legend()
 
