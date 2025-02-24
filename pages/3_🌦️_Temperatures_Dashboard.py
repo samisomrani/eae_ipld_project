@@ -8,7 +8,7 @@ import streamlit as st
 
 # ----- Page configs -----
 st.set_page_config(
-    page_title="<Your Name> Portfolio",
+    page_title="Sami Portfolio",
     page_icon="📊",
 )
 
@@ -62,14 +62,14 @@ min_date = temps_df["Date"].min()
 max_date = temps_df["Date"].max()
 
 # TODO:  Ex 3.5: What are the global minimum and maximum temperatures? Find the city and the date of each of them.
-min_temp = temps_df["AvgTemperatureFahrenheit"].min()
-max_temp = temps_df["AvgTemperatureFahrenheit"].max()
+min_temp = temps_df["AvgTemperatureCelsius"].min()
+max_temp = temps_df["AvgTemperatureCelsius"].max()
 
-min_temp_city = temps_df[temps_df["AvgTemperatureFahrenheit"] == min_temp]["City"].values[0]
-min_temp_date = temps_df[temps_df["AvgTemperatureFahrenheit"] == min_temp]["Date"].values[0]
+min_temp_city = temps_df[temps_df["AvgTemperatureCelsius"] == min_temp]["City"].values[0]
+min_temp_date = temps_df[temps_df["AvgTemperatureCelsius"] == min_temp]["Date"].values[0]
 
-max_temp_city = temps_df[temps_df["AvgTemperatureFahrenheit"] == max_temp]["City"].values[0]
-max_temp_date = temps_df[temps_df["AvgTemperatureFahrenheit"] == max_temp]["Date"].values[0]
+max_temp_city = temps_df[temps_df["AvgTemperatureCelsius"] == max_temp]["City"].values[0]
+max_temp_date = temps_df[temps_df["AvgTemperatureCelsius"] == max_temp]["Date"].values[0]
 
 
 # ----- Displaying the extracted information metrics -----
@@ -137,9 +137,10 @@ if unique_countries_list is not None and len(selected_cities) > 0:
     
         plt.plot(city_df_period["Date"],city_df_period["AvgTemperatureCelsius"],label=city)                # TODO plot each city line and use the label parameter to set the legend name for each city
 
-    plt.title(f"Temparture in {selected_cities[:]}")   # TODO
+    cities_str = ', '.join(selected_cities)
+    plt.title(f"Temparture in {cities_str} from {start_date} to {end_date}")   # TODO
     plt.xlabel("Date")  # TODO
-    plt.ylabel("Temperature")  # TODO
+    plt.ylabel("Temperature (°C)")  # TODO
 
     
 
@@ -159,8 +160,8 @@ if unique_countries_list is not None and len(selected_cities) > 0:
         city_df_period = city_df[city_df["Date"] <= end_date][city_df["Date"] >= start_date]     # TODO: get a dataframe with the rows of the selected city and the selected period of time using the Date column and any of the <, >, <=, >= operators to compare with start_date and end_date
         plt.hist(city_df_period["AvgTemperatureCelsius"],bins=20,label=city,alpha=0.8)                    # TODO: plot each city histogram in the same plot and use the label parameter to set the legend name for each city 
 
-    plt.title(f"Temperature Frenquency in {selected_cities}")   # TODO
-    plt.xlabel("Temperature")  # TODO
+    plt.title(f"Temperature Distribution from {start_date} to {end_date}")   # TODO
+    plt.xlabel("Temperature (°C)")  # TODO
     plt.ylabel("Frequency")
 
     plt.legend()

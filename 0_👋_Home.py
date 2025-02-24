@@ -39,7 +39,7 @@ st.write(f"""
 
 
 # ----- Personal title or short description -----
-current_role = "Student"   # TODO: Change this
+current_role = "Big Data & Analytics Student"   # TODO: Change this
 
 st.write(f"""<div style="text-align: center;"><h4><i>{current_role}</i></h4></div>""", unsafe_allow_html=True)
 
@@ -51,7 +51,7 @@ st.subheader("About Me")
 
 # TODO: Modify and adapt the following lines to your info, you can add or remove some details if you want
 st.write("""
-- 🧑‍💻 I am a currently student at EAE 
+- 🧑‍💻 I am a currently student at EAE Business School Barcelona 
 
 - 🛩️ prev: Bachelor degree in Finance & Master Degree in Project Management 
 

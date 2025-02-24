@@ -8,7 +8,7 @@ import streamlit as st
 
 # ----- Page configs -----
 st.set_page_config(
-    page_title="<Your Name> Portfolio",
+    page_title="Sami Portfolio",
     page_icon="📊",
 )
 
@@ -127,7 +127,7 @@ movies_avg_duration_per_year = only_movies.groupby("release_year")["duration_min
 if movies_avg_duration_per_year is not None:
     fig = plt.figure(figsize=(9, 6))
 
-    plt.plot(movies_avg_duration_per_year,marker='o') # TODO: generate the line plot using plt.plot() and the information from movies_avg_duration_per_year (the vertical axes with the minutes value) and its index (the horizontal axes with the years)
+    plt.plot(movies_avg_duration_per_year) # TODO: generate the line plot using plt.plot() and the information from movies_avg_duration_per_year (the vertical axes with the minutes value) and its index (the horizontal axes with the years)
 
     plt.title("Average Duration of Movies Across Years")
 
